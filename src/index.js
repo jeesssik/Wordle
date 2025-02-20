@@ -5,7 +5,8 @@ console.log('test dictionary:', useDictionary);
 
 const dictionary = realDictionary;
 const state = {
-  secret: useDictionary[Math.floor(Math.random() * useDictionary.length)],
+  //secret: useDictionary[Math.floor(Math.random() * useDictionary.length)],
+  secret: useDictionary,
   grid: Array(6)
     .fill()
     .map(() => Array(5).fill('')),
@@ -56,7 +57,7 @@ function registerKeyboardEvents() {
           state.currentRow++;
           state.currentCol = 0;
         } else {
-          alert('Not a valid word.');
+          alert('Palabra no valida.');
         }
       }
     }
@@ -139,9 +140,9 @@ function revealWord(guess) {
 
   setTimeout(() => {
     if (isWinner) {
-      alert('Congratulations!');
+      alert('Ganaste!');
     } else if (isGameOver) {
-      alert(`Better luck next time! The word was ${state.secret}.`);
+      alert(`Mejor suerte la próxima, la palabra era: ${state.secret}.`);
     }
   }, 3 * animation_duration);
 }
