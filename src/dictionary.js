@@ -12,5 +12,6 @@ export const realDictionary = [
   "crash", "merge", "pixel", "array", "admin", "panel", "route", "build", "scope", "trace",
   "macro", "event", "frame", "float", "error", "coder", "alias", "mutex", "spawn", "theme",
   "email", "print", "parse", "table", "while", "union", "queue", "split", "links", "const",
-  "chunk", "cable", "index", "linux", "nexus", "proxy", "regex", "mouse", "input", "bytes", "nerds"
+  "chunk", "cable", "index", "linux", "nexus", "proxy", "regex", "mouse", "input", "bytes", "nerds",
+  'tecla', 
 ];
