@@ -42,13 +42,19 @@ function drawBox(container, row, col, letter = '') {
   box.textContent = letter;
   box.id = `box${row}${col}`;
 
+  box.addEventListener('click', () => {
+    const input = document.getElementById('hidden-input');
+    input.focus();
+  });
+
   container.appendChild(box);
   return box;
 }
 
 function registerKeyboardEvents() {
-  document.body.onkeydown = (e) => {
-    const key = e.key;
+  const input = document.getElementById('hidden-input');
+  input.oninput = (e) => {
+    const key = e.data;
     if (key === 'Enter') {
       if (state.currentCol === 5) {
         const word = getCurrentWord();
@@ -69,6 +75,7 @@ function registerKeyboardEvents() {
     }
 
     updateGrid();
+    input.value = ''; // Clear the input field
   };
 }
 
@@ -166,6 +173,14 @@ function removeLetter() {
 function startup() {
   const game = document.getElementById('game');
   drawGrid(game);
+
+  // Add hidden input field
+  const input = document.createElement('input');
+  input.type = 'text';
+  input.id = 'hidden-input';
+  input.style.position = 'absolute';
+  input.style.opacity = 0;
+  document.body.appendChild(input);
 
   registerKeyboardEvents();
 }
