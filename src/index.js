@@ -40,23 +40,23 @@ function drawBox(container, row, col, letter = '') {
   box.textContent = letter;
   box.id = `box${row}${col}`;
 
-  if (isMobile) {
-    box.addEventListener('click', () => {
+  box.addEventListener('click', () => {
+    if (isMobile) {
       const input = document.getElementById('hidden-input');
       input.style.opacity = 1;
       input.style.zIndex = 1000;
       input.focus();
-    });
-  }
+    }
+  });
 
   container.appendChild(box);
   return box;
 }
 
 function registerKeyboardEvents() {
+  const input = document.getElementById('hidden-input');
   if (isMobile) {
     // Lógica para móviles
-    const input = document.getElementById('hidden-input');
     input.oninput = (e) => {
       const key = e.data;
       handleInput(key);
@@ -153,19 +153,18 @@ function startup() {
   const game = document.getElementById('game');
   drawGrid(game);
 
-  if (isMobile) {
-    const input = document.createElement('input');
-    input.type = 'text';
-    input.id = 'hidden-input';
-    input.autocomplete = 'off';
-    input.autocorrect = 'off';
-    input.spellcheck = false;
-    input.maxLength = 1;
-    input.style.position = 'absolute';
-    input.style.opacity = 0;
-    input.style.zIndex = -1;
-    document.body.appendChild(input);
-  }
+  // Agregar campo de entrada oculto
+  const input = document.createElement('input');
+  input.type = 'text';
+  input.id = 'hidden-input';
+  input.autocomplete = 'off';
+  input.autocorrect = 'off';
+  input.spellcheck = false;
+  input.maxLength = 1;
+  input.style.position = 'absolute';
+  input.style.opacity = 0;
+  input.style.zIndex = -1;
+  document.body.appendChild(input);
 
   registerKeyboardEvents();
 }
