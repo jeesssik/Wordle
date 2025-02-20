@@ -1,11 +1,8 @@
 import { useDictionary, realDictionary } from './dictionary.js';
 
-// for testing purposes, make sure to use the test dictionary
-console.log('test dictionary:', useDictionary);
-
+// Diccionario de palabras válidas
 const dictionary = realDictionary;
 const state = {
-  //secret: useDictionary[Math.floor(Math.random() * useDictionary.length)],
   secret: useDictionary,
   grid: Array(6)
     .fill()
@@ -42,8 +39,11 @@ function drawBox(container, row, col, letter = '') {
   box.textContent = letter;
   box.id = `box${row}${col}`;
 
+  // Asegurar que el teclado se abra al hacer clic en un cuadro
   box.addEventListener('click', () => {
     const input = document.getElementById('hidden-input');
+    input.style.opacity = 1;
+    input.style.zIndex = 1000;
     input.focus();
   });
 
@@ -63,7 +63,7 @@ function registerKeyboardEvents() {
           state.currentRow++;
           state.currentCol = 0;
         } else {
-          alert('Palabra no valida.');
+          alert('Palabra no válida.');
         }
       }
     }
@@ -75,8 +75,15 @@ function registerKeyboardEvents() {
     }
 
     updateGrid();
-    input.value = ''; // Clear the input field
+    input.value = ''; // Limpiar el campo de entrada después de cada tecla
   };
+
+  // Evitar que el campo pierda el foco en móviles
+  input.addEventListener('focusout', () => {
+    setTimeout(() => {
+      input.focus();
+    }, 100);
+  });
 }
 
 function getCurrentWord() {
@@ -114,10 +121,7 @@ function revealWord(guess) {
   for (let i = 0; i < 5; i++) {
     const box = document.getElementById(`box${row}${i}`);
     const letter = box.textContent;
-    const numOfOccurrencesSecret = getNumOfOccurrencesInWord(
-      state.secret,
-      letter
-    );
+    const numOfOccurrencesSecret = getNumOfOccurrencesInWord(state.secret, letter);
     const numOfOccurrencesGuess = getNumOfOccurrencesInWord(guess, letter);
     const letterPosition = getPositionOfOccurrence(guess, letter, i);
 
@@ -147,7 +151,7 @@ function revealWord(guess) {
 
   setTimeout(() => {
     if (isWinner) {
-      alert('Ganaste!');
+      alert('¡Ganaste!');
     } else if (isGameOver) {
       alert(`Mejor suerte la próxima, la palabra era: ${state.secret}.`);
     }
@@ -155,7 +159,7 @@ function revealWord(guess) {
 }
 
 function isLetter(key) {
-  return key.length === 1 && key.match(/[a-z]/i);
+  return key && key.length === 1 && key.match(/[a-z]/i);
 }
 
 function addLetter(letter) {
@@ -174,12 +178,17 @@ function startup() {
   const game = document.getElementById('game');
   drawGrid(game);
 
-  // Add hidden input field
+  // Crear campo de entrada invisible para capturar el teclado
   const input = document.createElement('input');
   input.type = 'text';
   input.id = 'hidden-input';
+  input.autocomplete = 'off';
+  input.autocorrect = 'off';
+  input.spellcheck = false;
+  input.maxLength = 1;
   input.style.position = 'absolute';
   input.style.opacity = 0;
+  input.style.zIndex = -1;
   document.body.appendChild(input);
 
   registerKeyboardEvents();
