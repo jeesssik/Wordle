@@ -63,6 +63,14 @@ function registerKeyboardEvents() {
       input.value = ''; // Limpiar el input después de cada tecla
     };
 
+    input.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        handleInput('Enter');
+      } else if (e.key === 'Backspace') {
+        handleInput('Backspace');
+      }
+    });
+
     input.addEventListener('focusout', () => {
       setTimeout(() => input.focus(), 100);
     });
@@ -86,11 +94,9 @@ function handleInput(key) {
         alert('Palabra no válida.');
       }
     }
-  }
-  if (key === 'Backspace') {
+  } else if (key === 'Backspace') {
     removeLetter();
-  }
-  if (isLetter(key)) {
+  } else if (isLetter(key)) {
     addLetter(key);
   }
   updateGrid();
