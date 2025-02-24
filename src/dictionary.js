@@ -1,4 +1,4 @@
-export const useDictionary ='clave' /*['notas', 'aulas', 'libro','clase', 'datos', 'tarea','grado','prueba',
+export const useDictionary ='virus' /*['notas', 'aulas', 'libro','clase', 'datos', 'tarea','grado','prueba',
 'profe','lapiz','saber','mente','deber','amigo','jugar','papel','punto','sueño', 'honor', 'joven','ideas']*/;
 
 export const realDictionary = [
